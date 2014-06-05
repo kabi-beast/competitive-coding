@@ -1,0 +1,90 @@
+/*
+https://code.google.com/codejam/contest/975485/dashboard
+*/
+
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+int main(void)
+{
+int i,l,x,j,stlim,elim,k,kode[20],kodeo[20],kodeb[20],m,mo,mb,res,n,p,t,q,qo,qb,curo,curb,c;
+char in[10000][10],code[20][1],codeo[20][1],codeb[20][1];
+FILE *fp;
+i=0;
+p=0;
+t=0;
+fp=fopen("input","r");
+while(fscanf(fp,"%s",in[i])!=EOF)
+i++;
+x=i;
+fclose(fp);
+j=0;
+l=atoi(in[0]);
+fp=fopen("output.txt","w");
+for(i=0;i<l;i++)
+{
+t=0;
+fprintf(fp,"Case #%d:",i+1);
+j=j+1;
+stlim=j+1;
+elim=j-1+atoi(in[j])*2;
+for(k=stlim,mo=0,mb=0,m=0;k<=elim;k=k+2,m++)
+{
+if(strcmp(in[k],"O")==0)
+{
+strcpy(codeo[mo],in[k]);
+kodeo[mo]=atoi(in[k+1]);
+mo++;
+}
+else
+{
+strcpy(codeb[mb],in[k]);
+kodeb[mb]=atoi(in[k+1]);
+mb++;
+}
+strcpy(code[m],in[k]);
+kode[m]=atoi(in[k+1]);
+}
+q=0,qo=0,qb=0,curo=1;curb=1;
+while(1)
+{
+if(strncmp(code[q],"O",1)==0)
+{
+if(kodeo[qo]!=curo&&qo<mo)
+ if(kodeo[qo]>curo)
+ curo++;
+ else
+ curo--;
+else
+{qo++;q++;}
+if(kodeb[qb]!=curb&&qb<mb)
+ if(kodeb[qb]>curb)
+ curb++;
+ else
+ curb--;
+t++;
+}
+else
+{
+if(kodeb[qb]!=curb&&qb<mb)
+ if(kodeb[qb]>curb)
+ curb++;
+ else
+ curb--;
+else
+{qb++;q++;}
+if(kodeo[qo]!=curo&&qo<mo)
+ if(kodeo[qo]>curo)
+ curo++;
+ else
+ curo--;
+t++;
+}
+if(q==m)
+break;
+}
+fprintf(fp," %d\n",t);
+j=elim+1;
+}
+return 0;
+}
